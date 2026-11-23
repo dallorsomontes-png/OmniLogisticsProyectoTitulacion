@@ -1,0 +1,137 @@
+
+/* =========================================
+   OMNILOGISTICS
+   FORMULARIO DE GESTIÓN DE PRODUCTOS
+========================================= */
+
+/* Ocultar formulario cuando corresponda */
+.productos-panel[hidden],
+#stockInicialGrupo[hidden] {
+  display: none !important;
+}
+
+/* Contenedor principal */
+.productos-panel {
+  margin-bottom: 24px;
+}
+
+.producto-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Distribución de campos */
+.producto-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+/* Etiquetas */
+.producto-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--muted, #94a3b8);
+  font-weight: 600;
+  font-size: 12px;
+}
+
+/* Campos de entrada */
+.producto-form input {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 13px;
+  border: 1px solid var(--border, #334155);
+  border-radius: 10px;
+  background: #0b1426;
+  color: var(--text, #f8fafc);
+  font-size: 14px;
+}
+
+/* Campo seleccionado */
+.producto-form input:focus {
+  outline: none;
+  border-color: var(--blue, #38bdf8);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
+}
+
+/* Campos de solo lectura */
+.producto-form input:read-only {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Mensaje informativo */
+.producto-ayuda {
+  color: var(--muted, #94a3b8);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* Contenedor de botones */
+.producto-acciones {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Botones generales */
+.producto-acciones button,
+.editar-producto {
+  padding: 12px 18px;
+  border-radius: 10px;
+  border: 1px solid var(--border, #334155);
+  color: var(--text, #f8fafc);
+  background: #172540;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+/* Botón guardar */
+#guardarProducto {
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #0891b2
+  );
+  border-color: #38bdf8;
+  font-weight: 700;
+}
+
+/* Efecto al pasar el mouse */
+.producto-acciones button:hover,
+.editar-producto:hover {
+  border-color: var(--blue, #38bdf8);
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.2);
+}
+
+/* Botones deshabilitados */
+.producto-acciones button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+/* Mensajes de resultado */
+#productoMensaje {
+  min-height: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Diseño adaptable para celulares */
+@media (max-width: 760px) {
+  .producto-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .producto-acciones {
+    flex-direction: column;
+  }
+
+  .producto-acciones button {
+    width: 100%;
+  }
+}

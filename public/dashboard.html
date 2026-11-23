@@ -1,0 +1,627 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>OmniLogistics | Dashboard</title>
+
+  <!-- ESTILOS -->
+  <link rel="stylesheet" href="/dashboard.css">
+  <link rel="stylesheet" href="/header-status.css">
+  <link rel="stylesheet" href="/productos-form.css">
+
+  <!-- CHART.JS INSTALADO LOCALMENTE -->
+  <script src="/chart.umd.js"></script>
+
+  <!-- SCRIPTS DEL SISTEMA -->
+  <script src="/dashboard.js" defer></script>
+  <script src="/particles.js" defer></script>
+  <script src="/holograma.js" defer></script>
+  <script src="/header-status.js" defer></script>
+  <script src="/productos-form.js" defer></script>
+
+  <!-- CENTRO DE CIBERSEGURIDAD -->
+  <script src="/ciberseguridad.js" defer></script>
+
+  <!-- ANALITICA DE INVENTARIO -->
+  <script src="/bigdata.js" defer></script>
+</head>
+
+<body>
+
+  <div class="app-layout">
+
+    <!-- MENU LATERAL -->
+    <aside class="sidebar">
+
+      <div class="brand">
+        <div class="brand-icon">O</div>
+        <div>
+          <h2>OmniLogistics</h2>
+          <span>Inventory Intelligence</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#dashboard" class="nav-link active">
+          <span>◈</span> Dashboard
+        </a>
+
+        <a href="#inventario" class="nav-link">
+          <span>▦</span> Inventario
+        </a>
+
+        <a href="#movimientos" class="nav-link">
+          <span>⇄</span> Movimientos
+        </a>
+
+        <a href="#alertas" class="nav-link">
+          <span>⚠</span> Alertas
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="system-status">
+          <span class="status-dot"></span>
+          Sistema operativo
+        </div>
+
+        <button id="logoutBtn" type="button">
+          Cerrar sesión
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content" id="dashboard">
+
+      <!-- ENCABEZADO -->
+      <header class="topbar">
+
+        <div class="dashboard-heading">
+          <p class="eyebrow">PANEL DE CONTROL</p>
+          <h1>Dashboard</h1>
+          <p class="subtitle">
+            Monitoreo inteligente de inventario
+          </p>
+        </div>
+
+        <div class="header-logos">
+
+          <!-- HOLOGRAMA 3D -->
+          <div class="hologram-panel">
+
+            <div
+              class="hologram-scene"
+              id="hologramScene"
+              aria-label="Cubo holográfico tridimensional animado"
+            >
+              <div class="hologram-cube" id="hologramCube">
+                <div class="cube-face front">OL</div>
+                <div class="cube-face back">3D</div>
+                <div class="cube-face right">◈</div>
+                <div class="cube-face left">◈</div>
+                <div class="cube-face top">OL</div>
+                <div class="cube-face bottom">3D</div>
+              </div>
+            </div>
+
+            <span class="hologram-caption">
+              HOLOGRAMA 3D
+            </span>
+
+          </div>
+
+          <!-- INDICADOR DE SEGURIDAD -->
+          <div
+            class="header-intelligence security-indicator"
+            id="securityIndicator"
+          >
+
+            <div class="intelligence-heading">
+              <span class="intelligence-symbol">◈</span>
+              <span>SEGURIDAD</span>
+            </div>
+
+            <strong
+              class="intelligence-state"
+              id="securityState"
+            >
+              VERIFICANDO
+            </strong>
+
+            <span
+              class="intelligence-description"
+              id="securityDescription"
+            >
+              Validando sesión...
+            </span>
+
+            <div class="intelligence-footer">
+              <span class="intelligence-light"></span>
+              <span id="securityDetail">
+                Autenticación JWT
+              </span>
+            </div>
+
+          </div>
+
+          <!-- LOGO CENTRAL -->
+          <div class="dashboard-banner">
+            <img
+              src="/logo.png"
+              alt="OmniLogistics - Proyecto de Titulación"
+              class="dashboard-logo"
+            >
+          </div>
+
+          <!-- INDICADOR DE API -->
+          <div
+            class="header-intelligence database-indicator"
+            id="databaseIndicator"
+          >
+
+            <div class="intelligence-heading">
+              <span class="intelligence-symbol">▤</span>
+              <span>API / DATOS</span>
+            </div>
+
+            <strong
+              class="intelligence-state"
+              id="databaseState"
+            >
+              VERIFICANDO
+            </strong>
+
+            <span
+              class="intelligence-description"
+              id="databaseDescription"
+            >
+              Consultando servidor...
+            </span>
+
+            <div class="intelligence-footer">
+              <span class="intelligence-light"></span>
+              <span id="databaseDetail">
+                Estado de conexión
+              </span>
+            </div>
+
+          </div>
+
+          <!-- MONITOR DE MOVIMIENTOS -->
+          <div class="live-monitor" id="liveMovements">
+
+            <div class="live-monitor-header">
+              <strong>MOVIMIENTOS</strong>
+              <span
+                class="live-status offline"
+                id="liveEstado"
+              >
+                CONECTANDO
+              </span>
+            </div>
+
+            <div class="live-stats">
+
+              <div class="live-stat entrada">
+                <span>▼ INGRESOS</span>
+                <strong id="liveEntradas">0</strong>
+              </div>
+
+              <div class="live-stat salida">
+                <span>▲ RETIROS</span>
+                <strong id="liveSalidas">0</strong>
+              </div>
+
+            </div>
+
+            <div
+              class="live-last"
+              id="liveUltimo"
+              aria-live="polite"
+            >
+              Esperando movimientos...
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- PERFIL DE USUARIO -->
+        <div class="user-profile">
+          <div class="user-avatar">A</div>
+          <div>
+            <strong id="usernameDisplay">
+              Usuario
+            </strong>
+            <span id="roleDisplay">
+              Rol
+            </span>
+          </div>
+        </div>
+
+      </header>
+
+      <!-- INDICADORES ESTADISTICOS -->
+      <section class="kpi-grid">
+
+        <article class="kpi-card neon-blue">
+          <div class="kpi-top">
+            <span>Productos registrados</span>
+            <span class="kpi-icon">▦</span>
+          </div>
+          <h2 id="totalProductos">--</h2>
+          <p>Total de productos en inventario</p>
+        </article>
+
+        <article class="kpi-card neon-green">
+          <div class="kpi-top">
+            <span>Unidades en stock</span>
+            <span class="kpi-icon">◈</span>
+          </div>
+          <h2 id="totalStock">--</h2>
+          <p>Unidades disponibles</p>
+        </article>
+
+        <article class="kpi-card neon-purple">
+          <div class="kpi-top">
+            <span>Movimientos</span>
+            <span class="kpi-icon">⇄</span>
+          </div>
+          <h2 id="totalMovimientos">--</h2>
+          <p>Entradas y salidas registradas</p>
+        </article>
+
+        <article class="kpi-card neon-red">
+          <div class="kpi-top">
+            <span>Alertas de stock</span>
+            <span class="kpi-icon">⚠</span>
+          </div>
+          <h2 id="totalAlertas">--</h2>
+          <p>Productos que requieren atención</p>
+        </article>
+
+      </section>
+
+      <!-- PANELES CENTRALES -->
+      <section class="charts-grid">
+
+        <!-- CENTRO DE CIBERSEGURIDAD -->
+        <article class="panel chart-panel">
+
+          <div class="panel-header">
+            <div>
+              <h3>Centro de Ciberseguridad</h3>
+              <p>
+                Auditoría de accesos y eventos de seguridad
+              </p>
+            </div>
+
+            <div class="monitor-status">
+              <span class="status-dot"></span>
+              <span id="monitorEstado">
+                Pendiente de conexión
+              </span>
+            </div>
+          </div>
+
+          <div class="chart-container">
+            <canvas
+              id="movimientosChart"
+              aria-label="Gráfico de accesos exitosos, fallidos y bloqueados"
+            ></canvas>
+          </div>
+
+          <div class="monitor-summary">
+            <span>
+              Accesos fallidos:
+              <strong id="monitorEntradas">--</strong>
+            </span>
+
+            <span>
+              Amenazas:
+              <strong id="monitorSalidas">--</strong>
+            </span>
+
+            <span>
+              Actualizado:
+              <strong id="monitorActualizacion">--</strong>
+            </span>
+          </div>
+
+        </article>
+
+        <!-- BIG DATA LOGISTICS INTELLIGENCE -->
+        <article class="panel chart-panel">
+
+          <div class="panel-header">
+            <div>
+              <h3>Big Data Logistics Intelligence</h3>
+              <p>
+                Análisis de inventario y unidades disponibles por categoría
+              </p>
+            </div>
+
+            <span class="radar-status">
+              ANÁLISIS DE DATOS
+            </span>
+          </div>
+
+          <div class="chart-container">
+            <canvas
+              id="categoriasChart"
+              aria-label="Gráfico de unidades disponibles por categoría"
+            ></canvas>
+          </div>
+
+          <div class="radar-summary">
+            <span>
+              Productos:
+              <strong id="radarProductos">--</strong>
+            </span>
+
+            <span>
+              Categorías:
+              <strong id="radarAlertas">--</strong>
+            </span>
+          </div>
+
+        </article>
+
+      </section>
+
+      <!-- GESTION DE PRODUCTOS: ADMINISTRADOR -->
+      <section
+        class="panel productos-panel"
+        id="gestion-productos"
+        hidden
+      >
+
+        <div class="panel-header">
+          <div>
+            <h3>Gestión de productos</h3>
+            <p>
+              Registro y actualización de inventario MongoDB
+            </p>
+          </div>
+        </div>
+
+        <form id="productoForm" class="producto-form">
+
+          <input type="hidden" id="productoId">
+
+          <div class="producto-form-grid">
+
+            <label>
+              Código SKU
+              <input
+                id="productoSku"
+                required
+                maxlength="60"
+              >
+            </label>
+
+            <label>
+              Nombre del producto
+              <input
+                id="productoNombre"
+                required
+                maxlength="150"
+              >
+            </label>
+
+            <label>
+              Categoría
+              <input id="productoCategoria" required>
+            </label>
+
+            <label>
+              Marca
+              <input id="productoMarca" required>
+            </label>
+
+            <label>
+              Ubicación en bodega
+              <input id="productoUbicacion" required>
+            </label>
+
+            <label>
+              Stock mínimo
+              <input
+                id="productoStockMinimo"
+                type="number"
+                min="0"
+                step="1"
+                value="5"
+                required
+              >
+            </label>
+
+            <label id="stockInicialGrupo">
+              Stock inicial
+              <input
+                id="productoStockInicial"
+                type="number"
+                min="0"
+                step="1"
+                value="0"
+                required
+              >
+            </label>
+
+          </div>
+
+          <p class="producto-ayuda">
+            Para modificar el stock de un producto existente,
+            utiliza los movimientos de entrada y salida.
+          </p>
+
+          <div class="producto-acciones">
+
+            <button
+              type="submit"
+              id="guardarProducto"
+            >
+              Guardar producto
+            </button>
+
+            <button
+              type="button"
+              id="cancelarProducto"
+            >
+              Limpiar formulario
+            </button>
+
+          </div>
+
+          <p
+            id="productoMensaje"
+            role="status"
+            aria-live="polite"
+          ></p>
+
+        </form>
+
+      </section>
+
+      <!-- INVENTARIO MONGODB -->
+      <section
+        class="panel inventory-panel"
+        id="inventario"
+      >
+
+        <div class="panel-header">
+          <div>
+            <h3>Inventario de productos</h3>
+            <p>Información registrada en MongoDB</p>
+          </div>
+
+          <input
+            type="search"
+            id="searchProducto"
+            placeholder="Buscar por nombre o SKU..."
+            aria-label="Buscar producto"
+          >
+        </div>
+
+        <!-- TABLA DE PRODUCTOS -->
+        <div class="table-wrapper">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>SKU</th>
+                <th>Producto</th>
+                <th>Categoría</th>
+                <th>Marca</th>
+                <th>Stock</th>
+                <th>Ubicación</th>
+                <th id="accionesHeader" hidden>
+                  Acciones
+                </th>
+              </tr>
+            </thead>
+
+            <tbody id="productosTable">
+              <tr>
+                <td colspan="6">
+                  Esperando conexión con MongoDB...
+                </td>
+              </tr>
+            </tbody>
+
+          </table>
+
+        </div>
+
+        <!-- PAGINACION -->
+        <div class="inventory-pagination">
+
+          <button
+            id="paginaAnterior"
+            type="button"
+            disabled
+          >
+            ← Anterior
+          </button>
+
+          <span>
+            Página
+            <strong id="paginaActual">1</strong>
+            de
+            <strong id="totalPaginas">0</strong>
+          </span>
+
+          <button
+            id="paginaSiguiente"
+            type="button"
+            disabled
+          >
+            Siguiente →
+          </button>
+
+        </div>
+
+      </section>
+
+      <!-- HISTORIAL DE MOVIMIENTOS -->
+      <section
+        class="panel"
+        id="movimientos"
+      >
+
+        <div class="panel-header">
+          <div>
+            <h3>Últimos movimientos</h3>
+            <p>Historial de entradas y salidas</p>
+          </div>
+        </div>
+
+        <div
+          id="movimientosList"
+          class="movements-list"
+        >
+          Esperando conexión con la API...
+        </div>
+
+      </section>
+
+      <!-- CENTRO DE ALERTAS -->
+      <section
+        class="panel"
+        id="alertas"
+      >
+
+        <div class="panel-header">
+          <div>
+            <h3>Centro de alertas</h3>
+            <p>Monitoreo de stock mínimo</p>
+          </div>
+        </div>
+
+        <div
+          id="alertasList"
+          class="alerts-list"
+        >
+          Esperando conexión con la API...
+        </div>
+
+      </section>
+
+      <!-- PIE DE PAGINA -->
+      <footer class="footer">
+        OmniLogistics · Sistema de Gestión de Inventario
+        · Proyecto de Titulación · IPLACEX
+      </footer>
+
+    </main>
+
+  </div>
+
+</body>
+</html>

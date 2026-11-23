@@ -1,0 +1,303 @@
+
+/* =========================================
+   OMNILOGISTICS - HEADER INTELLIGENCE
+   DISTRIBUCIÓN CORREGIDA
+========================================= */
+
+/* Encabezado completo */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+/* Área central del encabezado */
+.header-logos {
+  display: grid !important;
+
+  grid-template-columns:
+    150px
+    minmax(95px, 1fr)
+    minmax(260px, 340px)
+    minmax(95px, 1fr)
+    160px;
+
+  align-items: center;
+  gap: 8px;
+
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 0;
+  max-width: none;
+}
+
+/* Orden exacto de los elementos */
+.header-logos > .hologram-panel {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.header-logos > .security-indicator {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.header-logos > .dashboard-banner {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.header-logos > .database-indicator {
+  grid-column: 4;
+  grid-row: 1;
+}
+
+.header-logos > .live-monitor {
+  grid-column: 5;
+  grid-row: 1;
+}
+
+/* Evitar que los estilos antiguos desplacen elementos */
+.header-logos > * {
+  min-width: 0;
+  max-width: 100%;
+  margin: 0 !important;
+  justify-self: stretch;
+  box-sizing: border-box;
+}
+
+/* Holograma */
+.header-logos .hologram-panel {
+  width: 100%;
+  height: 115px;
+}
+
+/* Logo central */
+.header-logos .dashboard-banner {
+  width: 100%;
+  height: 115px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+.header-logos .dashboard-logo {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Monitor de movimientos */
+.header-logos .live-monitor {
+  width: 100%;
+  height: 115px;
+}
+
+/* =========================================
+   TARJETAS DE SEGURIDAD Y API
+========================================= */
+
+.header-intelligence {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  width: 100%;
+  height: 115px;
+
+  padding: 12px 10px;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(16, 32, 54, 0.98),
+      rgba(5, 13, 29, 0.98)
+    );
+
+  border: 1px solid rgba(56, 189, 248, 0.3);
+
+  overflow: hidden;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+
+.header-intelligence::before {
+  content: "";
+  position: absolute;
+
+  top: 0;
+  left: 12%;
+
+  width: 76%;
+  height: 2px;
+
+  background: #38bdf8;
+  box-shadow: 0 0 12px #38bdf8;
+}
+
+.security-indicator {
+  border-color: rgba(52, 211, 153, 0.3);
+}
+
+.security-indicator::before {
+  background: #34d399;
+  box-shadow: 0 0 12px #34d399;
+}
+
+.intelligence-heading {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  color: #cbd5e1;
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.intelligence-symbol {
+  color: #38bdf8;
+  font-size: 16px;
+}
+
+.security-indicator .intelligence-symbol {
+  color: #34d399;
+}
+
+.intelligence-state {
+  color: #fbbf24;
+
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.4px;
+
+  text-shadow: 0 0 12px rgba(251, 191, 36, 0.3);
+}
+
+.intelligence-description {
+  color: #94a3b8;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.intelligence-footer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  color: #64748b;
+  font-size: 9px;
+}
+
+.intelligence-light {
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+
+  border-radius: 50%;
+  background: #fbbf24;
+}
+
+/* Estados */
+.header-intelligence.is-online {
+  border-color: rgba(52, 211, 153, 0.5);
+  box-shadow: 0 0 18px rgba(52, 211, 153, 0.08);
+}
+
+.header-intelligence.is-online .intelligence-state {
+  color: #34d399;
+}
+
+.header-intelligence.is-online .intelligence-light {
+  background: #34d399;
+  box-shadow: 0 0 9px #34d399;
+  animation: omni-status-pulse 2s infinite;
+}
+
+.header-intelligence.is-offline {
+  border-color: rgba(251, 113, 133, 0.5);
+}
+
+.header-intelligence.is-offline .intelligence-state {
+  color: #fb7185;
+}
+
+.header-intelligence.is-offline .intelligence-light {
+  background: #fb7185;
+}
+
+@keyframes omni-status-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* =========================================
+   ADAPTACIÓN A PANTALLAS
+========================================= */
+
+@media (max-width: 1550px) {
+  .header-logos {
+    grid-template-columns:
+      115px
+      minmax(90px, 1fr)
+      minmax(190px, 280px)
+      minmax(90px, 1fr)
+      145px;
+    gap: 6px;
+  }
+
+  .header-intelligence {
+    padding: 10px 8px;
+  }
+
+  .intelligence-state {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 1250px) {
+  .topbar {
+    flex-wrap: wrap;
+  }
+
+  .header-logos {
+    flex-basis: 100%;
+    order: 3;
+  }
+}
+
+@media (max-width: 750px) {
+  .header-logos {
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .header-logos > * {
+    flex: 1 1 145px;
+  }
+
+  .header-logos .dashboard-banner {
+    flex-basis: 100%;
+    order: -1;
+  }
+}
